@@ -4,24 +4,20 @@ import java.util.*;
 public class StudentList {
 
 	public static String fileReadder(){
-		String studentNames = null;
 		try {
 			BufferedReader studentFileReader = new BufferedReader(
 					new InputStreamReader(
 							new FileInputStream(Constants.STUDENT_FILE_NAME)));
-			 studentNames = studentFileReader.readLine();
+			 return studentFileReader.readLine();
 		} catch (Exception e){
 
 		}
-		return studentNames;
+		return null;
 	}
 
 	public static void fileWriter(String studentNames, String studentToAdd) {
 		try {
-			Date date = new Date();
-			String df = Constants.DATE_FORMAT_SYSTEM;
-			DateFormat dateFormat = new SimpleDateFormat(df);
-			String formattedDate= dateFormat.format(date);
+			String formattedDate = new SimpleDateFormat(Constants.DATE_FORMAT_SYSTEM).format(new Date());
 			BufferedWriter studentFileWriter = new BufferedWriter(
 					new FileWriter(Constants.STUDENT_FILE_NAME, false));
 			studentFileWriter.write(studentNames + Constants.SPLIT + studentToAdd + Constants.LAST_UPDATED_MESSAGE + formattedDate);
@@ -32,13 +28,9 @@ public class StudentList {
 	}
 
 	public static void main(String[] args) {
-
-//		Check arguments
 		if(args[0].equals(Constants.ARG_A)) {
 			System.out.println(Constants.LOADING_MESSAGE);
-			String studentNames = fileReadder();
-			String studentNameArray[] = studentNames.split(Constants.SPLIT);
-			for(String student : studentNameArray) {
+			for (String student : fileReadder().split(Constants.SPLIT)) {
 				System.out.println(student);
 			}
 			System.out.println(Constants.LOADED_MESSAGE);
@@ -46,27 +38,22 @@ public class StudentList {
 
 		else if(args[0].equals(Constants.ARG_R)) {
 			System.out.println(Constants.LOADING_MESSAGE);
-			String studentNames = fileReadder();
-			char studentNameCharArray[] = studentNames.toCharArray();
 			int studentNumber = 0;
-			for(char c : studentNameCharArray) {
+			for(char c : fileReadder().toCharArray()) {
 				if(c == Constants.SPACE) {
 					studentNumber++;
 				}
 			}
-			String studentNameArray[] = studentNames.split(Constants.SPLIT);
-			Random rand = new Random();
-			int randomStudentIndex = rand.nextInt(studentNumber + 1);
+			String studentNameArray[] = fileReadder().split(Constants.SPLIT);
+			int randomStudentIndex = new Random().nextInt(studentNumber + 1);
 			System.out.println(studentNameArray[randomStudentIndex]);
 			System.out.println(Constants.LOADED_MESSAGE);
 		}
 
 		else if(args[0].equals(Constants.ARG_C)) {
 			System.out.println(Constants.LOADING_MESSAGE);
-			String studentNames = fileReadder();
-			char studentNameCharArray[] = studentNames.toCharArray();
 			int studentNumber = 0;
-			for(char c : studentNameCharArray) {
+			for(char c : fileReadder().toCharArray()) {
 				if(c == Constants.SPACE) {
 					studentNumber++;
 				}
@@ -77,20 +64,16 @@ public class StudentList {
 
 		else if(args[0].charAt(0) == Constants.ARG_ADD){
 			System.out.println(Constants.LOADING_MESSAGE);
-			String studentNames = fileReadder();
-			String studentToAdd = args[0].substring(1);
-			fileWriter(studentNames, studentToAdd);
+			fileWriter(fileReadder(), args[0].substring(1));
 			System.out.println(Constants.LOADED_MESSAGE);
 		}
 
 		else if(args[0].charAt(0) == Constants.ARG_FIND) {
 			System.out.println(Constants.LOADING_MESSAGE);
-			String studentNames = fileReadder();
-			String studentNameArray[] = studentNames.split(Constants.SPLIT);
+			String studentNameArray[] = fileReadder().split(Constants.SPLIT);
 			boolean done = false;
-			String studentToFind = args[0].substring(1);
 			for(int idx = 0; idx<studentNameArray.length && !done; idx++) {
-				if(studentNameArray[idx].equals(studentToFind)) {
+				if(studentNameArray[idx].equals(args[0].substring(1))) {
 					System.out.println(Constants.FOUND_MESSAGE);
 					done=true;
 				}
