@@ -71,16 +71,14 @@ public class StudentList {
 		else if(args[0].charAt(0) == Constants.ARG_FIND) {
 			System.out.println(Constants.LOADING_MESSAGE);
 			String studentNameArray[] = fileReadder().split(Constants.SPLIT);
-			boolean done = false;
-			for(int idx = 0; idx<studentNameArray.length && !done; idx++) {
+			for(int idx = 0; idx<studentNameArray.length; idx++) {
 				if(studentNameArray[idx].equals(args[0].substring(1))) {
 					System.out.println(Constants.FOUND_MESSAGE);
-					done=true;
+					System.out.println(Constants.LOADED_MESSAGE);
+					return;
 				}
 			}
-			if(!done){
-				System.out.println(Constants.NOT_FOUND_MESSAGE);
-			}
+			System.out.println(Constants.NOT_FOUND_MESSAGE);
 			System.out.println(Constants.LOADED_MESSAGE);
 		}
 
