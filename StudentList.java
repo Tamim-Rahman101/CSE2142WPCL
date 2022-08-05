@@ -52,13 +52,8 @@ public class StudentList {
 
 		else if(args[0].equals(Constants.ARG_C)) {
 			System.out.println(Constants.LOADING_MESSAGE);
-			int studentNumber = 0;
-			for(char c : fileReadder().toCharArray()) {
-				if(c == Constants.SPACE) {
-					studentNumber++;
-				}
-			}
-			System.out.println((studentNumber + 1) + Constants.COUNTED_WORD_MESSAGE);
+			String studentNameArray[] = fileReadder().split(Constants.SPLIT);
+			System.out.println(studentNameArray.length);
 			System.out.println(Constants.LOADED_MESSAGE);
 		}
 
